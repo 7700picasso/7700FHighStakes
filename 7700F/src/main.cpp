@@ -172,6 +172,8 @@ else if(Controller1.ButtonB.pressing())
 }
 
 
+motor.
+
 if (Controller1.ButtonR1.pressing())
 {
   intake.spin(forward, 80, pct);
