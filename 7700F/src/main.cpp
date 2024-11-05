@@ -19,19 +19,68 @@ motor RF=motor(PORT11,ratio6_1,false);
 motor RB=motor(PORT20,ratio6_1,false);
 motor intake=motor(PORT7, ratio6_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
+inertial  Gyro (PORT17);  
 // A global instance of competition
-competition Competition;
+float pi = 3.14;
+float dia = 3.25;
+float gearRatio = 0.6;
+
+
+//competition Competition;
 
 void drive(int lspeed, int rspeed, int wt){
   LF.spin(forward, lspeed, pct);
   RF.spin(forward, rspeed, pct);
-  RB.spin(forward, rspeed, pct);
-  LB.spin(forward, lspeed, pct);
-
+  RB.spin(reverse, rspeed, pct);
+  LB.spin(reverse, lspeed, pct);
   wait(wt, msec);
+}
+void driveBrake(){
+  LF.stop(brake);
+  RF.stop(brake);
+  LB.stop(brake);
+  RB.stop(brake);
+
+}
+
+void gyroTurnwithP(float target) {
+
+  float heading = 0;
+  float accuracy = 2.0;
+  float Kp = 3.0;
+  Gyro.setRotation(0,deg);
+  float  error = target - heading; 
+  float speed = error * Kp;
+
+  while (fabs(error) > accuracy) {
+    drive(speed, -speed, 10);
+    heading = Gyro.rotation();
+    error = heading - target;
+    speed = error * Kp;
+  }
+  driveBrake();
 }
 
 
+
+
+void inchDriveP(float target, float speed)
+{Brain.Screen.printAt(1, 20, "incDrive");
+
+float x =0.0;  //distance that robot travles
+float error = target-x;   //how far the robot is from the target
+float accuracy = 0.2 ; //its just to measure against 
+LF.setPosition(0.0,rev);   //we are setting the senor to 0 rev
+
+
+while(fabs(error>accuracy)){
+  drive(speed*fabs(error)/error, speed*fabs(error)/error, 10);
+  x = LF.position(rev)*pi*dia*gearRatio;
+  error = target-x;
+}
+
+driveBrake();
+}
 
 double YOFFSET = 20; //offset for the display
 //Writes a line for the diagnostics of a motor on the Brain
@@ -76,7 +125,7 @@ double rightBackTemp = RB.temperature(celsius);
 
 if (LF.installed())
 {
-MotorDisplay(1, leftBackCurr, leftFrontTemp);
+MotorDisplay(1, leftFrontCurr, leftFrontTemp);
 Brain.Screen.printAt(300, YOFFSET + 1, "LF");
 }
 else
@@ -137,6 +186,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+  drive(80, 80, 50);
+  
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
@@ -172,7 +223,7 @@ else if(Controller1.ButtonB.pressing())
 }
 
 
-motor.
+motor;
 
 if (Controller1.ButtonR1.pressing())
 {
