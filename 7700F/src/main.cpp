@@ -30,9 +30,9 @@ float gearRatio = 0.6;
 
 void drive(int lspeed, int rspeed, int wt){
   LF.spin(forward, lspeed, pct);
+  LB.spin(forward, lspeed, pct);
   RF.spin(forward, rspeed, pct);
-  RB.spin(reverse, rspeed, pct);
-  LB.spin(reverse, lspeed, pct);
+  RB.spin(forward, rspeed, pct);
   wait(wt, msec);
 }
 void driveBrake(){
@@ -63,22 +63,20 @@ void gyroTurnwithP(float target) {
 
 
 
-void inchDriveP(float target, float speed)
-{Brain.Screen.printAt(1, 20, "incDrive");
+void inchDriveP(float target, float speed){
+  Brain.Screen.printAt(1, 20, "incDrive");
+  LF.setPosition(0.0,rev);   //we are setting the senor to 0 rev
+  float x =0.0;  //distance that robot travles
+  float error = target - x;   //how far the robot is from the target
+  float accuracy = 0.2 ; //its just to measure against 
 
-float x =0.0;  //distance that robot travles
-float error = target-x;   //how far the robot is from the target
-float accuracy = 0.2 ; //its just to measure against 
-LF.setPosition(0.0,rev);   //we are setting the senor to 0 rev
+  while(fabs(error>accuracy)){
+    drive((speed*fabs(error)/error), (speed*fabs(error)/error), 10);
+    x = LF.position(rev)*pi*dia*gearRatio;
+    error = target-x;
+  }
 
-
-while(fabs(error>accuracy)){
-  drive(speed*fabs(error)/error, speed*fabs(error)/error, 10);
-  x = LF.position(rev)*pi*dia*gearRatio;
-  error = target-x;
-}
-
-driveBrake();
+  driveBrake();
 }
 
 double YOFFSET = 20; //offset for the display
@@ -170,6 +168,11 @@ Brain.Screen.printAt(5, YOFFSET + 91, "RB Problem");
 
 void pre_auton(void) {
 
+  // while(Gyro.isCalibrating())
+  // {
+  //   wait(500, msec);
+  // }
+
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
 }
@@ -187,8 +190,8 @@ void pre_auton(void) {
 void autonomous(void) {
 
   inchDriveP(20,80); 
-  wait(500, msec);
-  gyroTurnwithP(90);
+  // wait(500, msec);
+  // gyroTurnwithP(90);
 }
 
 /*---------------------------------------------------------------------------*/
