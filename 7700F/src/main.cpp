@@ -11,15 +11,15 @@
 using namespace vex;
 // A global instance of competition
 competition Competition;
- brain Brain;
+brain Brain;
 controller Controller1;
-motor LF=motor(PORT1,ratio6_1,true);
-motor LB=motor(PORT10,ratio6_1,true);
-motor RF=motor(PORT11,ratio6_1,false);
-motor RB=motor(PORT20,ratio6_1,false);
-motor intake=motor(PORT7, ratio6_1, true);
+motor LF=motor(PORT4,ratio18_1,true);
+motor LB=motor(PORT3,ratio18_1,true);
+motor RF=motor(PORT11,ratio18_1,false);
+motor RB=motor(PORT20,ratio18_1,false);
+motor intake=motor(PORT2, ratio6_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
-inertial  Gyro (PORT17);  
+inertial  Gyro (PORT12);  
 // A global instance of competition
 float pi = 3.14;
 float dia = 3.25;
@@ -44,11 +44,10 @@ void driveBrake(){
 }
 
 void gyroTurnwithP(float target) {
-
-  float heading = 0;
-  float accuracy = 2.0;
+  float accuracy = 1.0;
   float Kp = 3.0;
   Gyro.setRotation(0,deg);
+  float heading = Gyro.heading();
   float  error = target - heading; 
   float speed = error * Kp;
 
@@ -188,6 +187,8 @@ void pre_auton(void) {
 void autonomous(void) {
 
   inchDriveP(20,80); 
+  wait(500, msec);
+  gyroTurnwithP(90);
 }
 
 /*---------------------------------------------------------------------------*/
