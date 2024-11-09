@@ -192,7 +192,7 @@ void autonomous(void) {
 
   inchDriveP(-20,80); 
   clamp.set(true);
-
+  con.spin(forward, 80, pct); 
 
   // wait(500, msec);
   // gyroTurnwithP(90);
