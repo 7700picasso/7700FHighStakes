@@ -18,6 +18,7 @@ motor LB=motor(PORT3,ratio18_1,true);
 motor RF=motor(PORT11,ratio18_1,false);
 motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT2, ratio6_1, true);
+motor con=motor(PORT1, ratio18_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial  Gyro (PORT12);  
 // A global instance of competition
@@ -189,7 +190,10 @@ void pre_auton(void) {
 
 void autonomous(void) {
 
-  inchDriveP(20,80); 
+  inchDriveP(-20,80); 
+  clamp.set(true);
+
+
   // wait(500, msec);
   // gyroTurnwithP(90);
 }
@@ -229,15 +233,18 @@ motor;
 if (Controller1.ButtonR1.pressing())
 {
   intake.spin(forward, 80, pct);
+  con.spin(forward, 80, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
   intake.spin(reverse, 80, pct);
+  con.spin(reverse, 80, pct);
 
 
 }
 else {
 intake.stop(); 
+con.stop();
 }
 
 
