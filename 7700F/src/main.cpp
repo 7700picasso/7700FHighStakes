@@ -17,7 +17,7 @@ motor LF=motor(PORT4,ratio18_1,true);
 motor LB=motor(PORT3,ratio18_1,true);
 motor RF=motor(PORT11,ratio18_1,false);
 motor RB=motor(PORT20,ratio18_1,false);
-motor intake=motor(PORT2, ratio6_1, true);
+motor intake=motor(PORT2, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial  Gyro (PORT12);  
@@ -65,13 +65,13 @@ void gyroTurnwithP(float target) {
 
 
 void inchDriveP(float target, float speed){
-  Brain.Screen.printAt(1, 20, "incDrive");
+  Brain.Screen.printAt(20, 80, "inchDrive");
   LF.setPosition(0.0,rev);   //we are setting the senor to 0 rev
   float x =0.0;  //distance that robot travles
   float error = target - x;   //how far the robot is from the target
   float accuracy = 0.2 ; //its just to measure against 
 
-  while(fabs(error>accuracy)){
+  while(fabs(error)>accuracy){
     drive((speed*fabs(error)/error), (speed*fabs(error)/error), 10);
     x = LF.position(rev)*pi*dia*gearRatio;
     error = target-x;
@@ -189,13 +189,11 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-
-  inchDriveP(-20,80); 
-  clamp.set(true);
-  con.spin(forward, 80, pct); 
-
-  // wait(500, msec);
-  // gyroTurnwithP(90);
+  inchDriveP(-10, 80);
+  gyroTurnwithP(-5);
+  inchDriveP(-10, 80);
+  clamp.set(false);
+  con.spin(reverse, 80, pct);
 }
 
 /*---------------------------------------------------------------------------*/
