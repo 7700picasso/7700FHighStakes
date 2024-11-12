@@ -189,13 +189,14 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-/* inchDriveP(-5, 80);
+ inchDriveP(-5, 80);
   gyroTurnwithP(-2);
   wait(500, msec);
   inchDriveP(-10, 80);
   clamp.set(false);
    con.spin(reverse, 80, pct);
-   */
+   dirv
+   
  // drive(20, -20, 2000);
 }
 
