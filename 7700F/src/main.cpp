@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/*                                                                            */
+/*                                                                            */ 
 /*    Module:       main.cpp                                                  */
 /*    Author:       Team7700                                                  */
 /*    Created:      10/14/2024, 5:27:25 PM                                    */
@@ -24,7 +24,7 @@ inertial  Gyro (PORT12);
 // A global instance of competition
 float pi = 3.14;
 float dia = 3.25;
-float gearRatio = 0.6;
+float gearRatio = 1.6;
 
 
 //competition Competition;
@@ -55,7 +55,7 @@ void gyroTurnwithP(float target) {
   while (fabs(error) > accuracy) {
     drive(speed, -speed, 10);
     heading = Gyro.rotation();
-    error = heading - target;
+    error = target - heading;
     speed = error * Kp;
   }
   driveBrake();
@@ -175,7 +175,7 @@ void pre_auton(void) {
   // }
 
   // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
+  // Example: clearing encoders, setting servo positions
 }
 
 /*---------------------------------------------------------------------------*/
@@ -189,11 +189,14 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  inchDriveP(-10, 80);
-  gyroTurnwithP(-5);
+/* inchDriveP(-5, 80);
+  gyroTurnwithP(-2);
+  wait(500, msec);
   inchDriveP(-10, 80);
   clamp.set(false);
-  con.spin(reverse, 80, pct);
+   con.spin(reverse, 80, pct);
+   */
+ // drive(20, -20, 2000);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -224,19 +227,28 @@ else if(Controller1.ButtonB.pressing())
 {
   clamp.set(false);
 }
+if(Controller1.ButtonL1.pressing())
+{
+ 
+  clamp.set(true);
+}
+else if(Controller1.ButtonL2.pressing())
+{
+  clamp.set(false);
+}
 
 
 motor;
 
 if (Controller1.ButtonR1.pressing())
 {
-  intake.spin(forward, 80, pct);
-  con.spin(forward, 80, pct);
+  intake.spin(forward, 85, pct);
+  con.spin(forward, 55, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
-  intake.spin(reverse, 80, pct);
-  con.spin(reverse, 80, pct);
+  intake.spin(reverse, 85, pct);
+  con.spin(reverse, 55, pct);
 
 
 }
@@ -269,3 +281,19 @@ int main() {
     wait(100, msec);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
