@@ -195,7 +195,7 @@ void autonomous(void) {
   inchDriveP(-10, 80);
   clamp.set(false);
    con.spin(reverse, 80, pct);
-   dirv
+   
    
  // drive(20, -20, 2000);
 }
@@ -239,7 +239,7 @@ else if(Controller1.ButtonL2.pressing())
 }
 
 
-motor;
+
 
 if (Controller1.ButtonR1.pressing())
 {
