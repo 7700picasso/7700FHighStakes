@@ -20,7 +20,7 @@ motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT2, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
-inertial  Gyro (PORT12);  
+inertial Gyro (PORT12);  
 // A global instance of competition
 float pi = 3.14;
 float dia = 3.25;
@@ -47,17 +47,17 @@ void driveBrake(){
 void gyroTurnwithP(float target) {
   Gyro.setRotation(0.0,deg);
   float accuracy = 1.0;
-  float Kp = 3.0;
+  float Kp = 0.5;
   float heading = Gyro.rotation();
   float  error = target - heading; 
   float speed=Kp*error;
 
   while (fabs(error) > accuracy) {
     speed = error * Kp;
-    drive(speed*fabs(error/error), -speed*fabs(error/error), 10);
+    drive(speed*(fabs(error)/(error)), -speed*(fabs(error)/(error)), 10);
     heading = Gyro.rotation();
     error = target - heading;
-    
+
   }
   driveBrake();
 }
@@ -193,19 +193,8 @@ void pre_auton(void) {
 
 void autonomous(void) {
  
-  //
-  clamp.set(false);
-  inchDriveP(-48);
-  clamp.set(true);
-   con.spin(reverse, 80, pct);
-   gyroTurnwithP(-90);
-   inchDriveP(24);
-   intake.spin(forward, 80, pct);  
-   gyroTurnwithP(-180);
-   clamp.set(false);
-   inchDriveP(48);
-   con.stop();
-   intake.stop();
+  inchDriveP(24);
+  
 
    
    
