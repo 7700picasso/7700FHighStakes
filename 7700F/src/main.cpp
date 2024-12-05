@@ -70,7 +70,7 @@ void inchDriveP(float target){
   LF.setPosition(0.0,rev);   //we are setting the senor to 0 rev
   float x =0.0;  //distance that robot travles
   float error = target - x;   //how far the robot is from the target
-  float accuracy = 0.2 ; //its just to measure against 
+  float accuracy = 0.5 ; //its just to measure against 
   float kp=3.0;
     float speed =kp*error;
   while(fabs(error)>accuracy){
@@ -192,8 +192,13 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
- 
-  inchDriveP(24);
+  clamp.set(true);
+  inchDriveP(-24);
+  gyroTurnwithP(90);
+  clamp.set(false);
+  
+
+
   
 
    
