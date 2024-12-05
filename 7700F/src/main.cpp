@@ -48,13 +48,13 @@ void gyroTurnwithP(float target) {
   Gyro.setRotation(0.0,deg);
   float accuracy = 1.0;
   float Kp = 3.0;
-  float heading = 0.0;
+  float heading = Gyro.rotation();
   float  error = target - heading; 
   float speed=Kp*error;
 
   while (fabs(error) > accuracy) {
     speed = error * Kp;
-    drive(speed, -speed, 10);
+    drive(speed*fabs(error/error), -speed*fabs(error/error), 10);
     heading = Gyro.rotation();
     error = target - heading;
     
@@ -71,10 +71,10 @@ void inchDriveP(float target){
   float x =0.0;  //distance that robot travles
   float error = target - x;   //how far the robot is from the target
   float accuracy = 0.2 ; //its just to measure against 
-  float kp=1.0;
+  float kp=3.0;
     float speed =kp*error;
   while(fabs(error)>accuracy){
-    drive( (speed*fabs(error)/error) , (speed*fabs(error)/error), 10);
+    drive (speed , speed, 10);
     x = LF.position(rev)*pi*dia*gearRatio;
     error = target-x;
     speed=kp*error;
@@ -172,10 +172,10 @@ Brain.Screen.printAt(5, YOFFSET + 91, "RB Problem");
 
 void pre_auton(void) {
 
-  // while(Gyro.isCalibrating())
-  // {
-  //   wait(500, msec);
-  // }
+   while(Gyro.isCalibrating())
+   {
+   wait(500, msec);
+   }
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions
