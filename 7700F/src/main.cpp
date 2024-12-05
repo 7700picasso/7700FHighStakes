@@ -45,18 +45,19 @@ void driveBrake(){
 }
 
 void gyroTurnwithP(float target) {
+  Gyro.setRotation(0.0,deg);
   float accuracy = 1.0;
   float Kp = 3.0;
-  Gyro.setRotation(0,deg);
-  float heading = Gyro.heading();
+  float heading = 0.0;
   float  error = target - heading; 
-  float speed = error * Kp;
+  float speed=Kp*error;
 
   while (fabs(error) > accuracy) {
+    speed = error * Kp;
     drive(speed, -speed, 10);
     heading = Gyro.rotation();
     error = target - heading;
-    speed = error * Kp;
+    
   }
   driveBrake();
 }
@@ -64,17 +65,19 @@ void gyroTurnwithP(float target) {
 
 
 
-void inchDriveP(float target, float speed){
+void inchDriveP(float target){
   Brain.Screen.printAt(20, 80, "inchDrive");
   LF.setPosition(0.0,rev);   //we are setting the senor to 0 rev
   float x =0.0;  //distance that robot travles
   float error = target - x;   //how far the robot is from the target
   float accuracy = 0.2 ; //its just to measure against 
-
+  float kp=1.0;
+    float speed =kp*error;
   while(fabs(error)>accuracy){
-    drive((speed*fabs(error)/error), (speed*fabs(error)/error), 10);
+    drive( (speed*fabs(error)/error) , (speed*fabs(error)/error), 10);
     x = LF.position(rev)*pi*dia*gearRatio;
     error = target-x;
+    speed=kp*error;
   }
 
   driveBrake();
@@ -189,13 +192,22 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
- inchDriveP(-5, 80);
-  gyroTurnwithP(-2);
-  wait(500, msec);
-  inchDriveP(-10, 80);
+ 
+  //
   clamp.set(false);
+  inchDriveP(-48);
+  clamp.set(true);
    con.spin(reverse, 80, pct);
-   dirv
+   gyroTurnwithP(-90);
+   inchDriveP(24);
+   intake.spin(forward, 80, pct);  
+   gyroTurnwithP(-180);
+   clamp.set(false);
+   inchDriveP(48);
+   con.stop();
+   intake.stop();
+
+   
    
  // drive(20, -20, 2000);
 }
