@@ -196,9 +196,9 @@ void autonomous(void) {
   //inchDriveP(-24);
   //gyroTurnwithP(90);
   //clamp.set(false);
-  con.spin(reverse, 55, pct);
-  wait(1500,msec);
-  inchDriveP(13);
+  //con.spin(reverse, 55, pct);
+//wait(1500,msec);
+  /*inchDriveP(13);
   wait(1000, msec);
   gyroTurnwithP(-90);
   clamp.set(true);
@@ -206,8 +206,18 @@ void autonomous(void) {
  clamp.set(false);
   gyroTurnwithP(170);
   intake.spin(reverse, 85, pct);
-  wait(1000,msec);
-  inchDriveP(18);
+   wait(1000,msec);
+  inchDriveP(18);*/
+
+clamp.set(false);
+  inchDriveP(-27);
+  clamp.set(true);
+con.spin(reverse, 55,pct);
+inchDriveP(10);
+inchDriveP(-10);
+
+  
+
   
 
 
