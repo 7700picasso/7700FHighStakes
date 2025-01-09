@@ -20,14 +20,65 @@ motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT2, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
-inertial Gyro (PORT12);  
+inertial Gyro (PORT15);  
 // A global instance of competition
 float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
 
+int AutonSelected = 4;
+int AutonMin = 0;
+int AutonMax = 4;
 
 //competition Competition;
+
+void selectAuton() {
+		bool selectingAuton = true;
+		
+		int x = Brain.Screen.xPosition(); // get the x position of last touch of the screen
+		int y = Brain.Screen.yPosition(); // get the y position of last touch of the screen
+		
+		// check to see if buttons were pressed
+		if (x >= 20 && x <= 120 && y >= 50 && y <= 150){ // select button pressed
+				AutonSelected++;
+				if (AutonSelected > AutonMax){
+						AutonSelected = AutonMin; // rollover
+				}
+				Brain.Screen.printAt(1, 200, "Auton Selected =  %d   ", AutonSelected);
+		}
+		
+		
+		if (x >= 170 && x <= 270 && y >= 50 && y <= 150) {
+				selectingAuton = false; // GO button pressed
+				Brain.Screen.printAt(1, 200, "Auton  =  %d   GO           ", AutonSelected);
+		}
+		
+		if (!selectingAuton) {
+				Brain.Screen.setFillColor(green);
+				Brain.Screen.drawCircle(300, 75, 25);
+		} else {
+				Brain.Screen.setFillColor(red);
+				Brain.Screen.drawCircle(300, 75, 25);
+		}
+		
+		wait(10, msec); // slow it down
+		Brain.Screen.setFillColor(black);
+}
+
+void drawGUI() {
+	// Draws 2 buttons to be used for selecting auto
+	Brain.Screen.clearScreen();
+	Brain.Screen.printAt(1, 40, "Select Auton then Press Go");
+	Brain.Screen.printAt(1, 200, "Auton Selected =  %d   ", AutonSelected);
+	Brain.Screen.setFillColor(red);
+	Brain.Screen.drawRectangle(20, 50, 100, 100);
+	Brain.Screen.drawCircle(300, 75, 25);
+	Brain.Screen.printAt(25, 75, "Select");
+	Brain.Screen.setFillColor(green);
+	Brain.Screen.drawRectangle(170, 50, 100, 100);
+	Brain.Screen.printAt(175, 75, "GO");
+	Brain.Screen.setFillColor(black);
+}
 
 void drive(int lspeed, int rspeed, int wt){
   LF.spin(forward, lspeed, pct);
@@ -196,21 +247,59 @@ void autonomous(void) {
   //inchDriveP(-24);
   //gyroTurnwithP(90);
   //clamp.set(false);
-  con.spin(reverse, 55, pct);
+
+
+  switch (AutonSelected) {
+				case 0:
+					//15 second auton
+					break;
+				
+				case 1:
+					//code 1
+					break;
+				
+				case 2:
+					//code 2
+					break;
+				
+				case 3:
+					//code 3
+					break;
+        
+        case 4:
+		     //skills auton       
+  con.spin(reverse, 60, pct);
   wait(1500,msec);
   inchDriveP(13);
   wait(1000, msec);
   gyroTurnwithP(-90);
   clamp.set(true);
-  inchDriveP(-18);
- clamp.set(false);
-  gyroTurnwithP(170);
-  intake.spin(reverse, 85, pct);
+  inchDriveP(-22);
+  clamp.set(false);
+  gyroTurnwithP(175);
+  intake.spin(reverse, 89, pct);
   wait(1000,msec);
   inchDriveP(18);
+  wait(1000,msec);
+  gyroTurnwithP(-3);
+  inchDriveP(9);
+  wait(1500,msec);
+  gyroTurnwithP(90);
+  inchDriveP(5);
+  wait(1500,msec);
+  inchDriveP(-10);
+  gyroTurnwithP(120);
+  inchDriveP(-7);
+  clamp.set(true);
+  inchDriveP(48);
+  gyroTurnwithP(180);
+  inchDriveP(-7);
+  clamp.set(false);
   
 
+          break; }
 
+// kieran please set the robot and the field correctly >:(
 
   
 
@@ -265,13 +354,13 @@ motor;
 
 if (Controller1.ButtonR1.pressing())
 {
-  intake.spin(forward, 85, pct);
-  con.spin(forward, 55, pct);
+  intake.spin(forward, 89, pct);
+  con.spin(forward, 57, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
-  intake.spin(reverse, 85, pct);
-  con.spin(reverse, 55, pct);
+  intake.spin(reverse, 89, pct);
+  con.spin(reverse, 57, pct);
 
 
 }
@@ -304,19 +393,3 @@ int main() {
     wait(100, msec);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
