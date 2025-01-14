@@ -17,7 +17,7 @@ motor LF=motor(PORT4,ratio18_1,true);
 motor LB=motor(PORT3,ratio18_1,true);
 motor RF=motor(PORT11,ratio18_1,false);
 motor RB=motor(PORT20,ratio18_1,false);
-motor intake=motor(PORT2, ratio6_1, false);
+motor intake=motor(PORT5, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial Gyro (PORT15);  
