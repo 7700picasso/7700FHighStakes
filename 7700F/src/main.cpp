@@ -26,7 +26,13 @@ float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
 
-int AutonSelected = 4;
+
+
+
+
+
+//SELECTING AUTON
+int AutonSelected = 1;
 int AutonMin = 0;
 int AutonMax = 4;
 
@@ -247,15 +253,38 @@ void autonomous(void) {
   //inchDriveP(-24);
   //gyroTurnwithP(90);
   //clamp.set(false);
-
-
+  
   switch (AutonSelected) {
 				case 0:
-					//15 second auton
+					//15 second auton red negative side (blue positive)
+          clamp.set(true);
+          inchDriveP(-26);
+          clamp.set(false);
+          con.spin(reverse, 80, pct);
+          wait(1500,msec);
+          gyroTurnwithP(50);
+          intake.spin(reverse, 80, pct);
+          inchDriveP(20);
+          wait(1000, msec);
+          clamp.set(true);
+          gyroTurnwithP(165);
+          inchDriveP(45);
 					break;
 				
 				case 1:
-					//code 1
+					//15 second auton red positive side (blue negative)
+          clamp.set(true);
+          inchDriveP(-26);
+          clamp.set(false);
+          con.spin(reverse, 65, pct);
+          wait(1500,msec);
+          gyroTurnwithP(-50);
+          intake.spin(reverse, 65, pct);
+          inchDriveP(20);
+          wait(1000,msec);
+          clamp.set(true);
+          gyroTurnwithP(-165);
+          inchDriveP(45);
 					break;
 				
 				case 2:
