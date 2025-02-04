@@ -32,7 +32,7 @@ float gearRatio = 1.6;
 
 
 //SELECTING AUTON
-int AutonSelected = 1;
+int AutonSelected = 4;
 int AutonMin = 0;
 int AutonMax = 4;
 
@@ -104,7 +104,7 @@ void driveBrake(){
 void gyroTurnwithP(float target) {
   Gyro.setRotation(0.0,deg);
   float accuracy = 1.5;
-  float Kp = 0.75;
+  float Kp = 0.65;
   float heading = Gyro.rotation();
   float  error = target - heading; 
   float speed=Kp*error;
@@ -297,35 +297,48 @@ void autonomous(void) {
         
         case 4:
 		     //skills auton       
-  con.spin(reverse, 60, pct);
-  wait(1500,msec);
-  inchDriveP(13);
+  
+  // first ring onto aliance stake 
+  con.spin(reverse, 25, pct);
+  wait(700,msec);
+  con.stop(); 
+
+  //getting first mogo
+  inchDriveP(16);
   wait(1000, msec);
-  gyroTurnwithP(-90);
+  gyroTurnwithP(-87);
   clamp.set(true);
   inchDriveP(-22);
   clamp.set(false);
-  gyroTurnwithP(175);
+  gyroTurnwithP(170);
   intake.spin(reverse, 89, pct);
-  wait(1000,msec);
+   con.spin(reverse, 60, pct);
   inchDriveP(18);
   wait(1000,msec);
-  gyroTurnwithP(-3);
+  gyroTurnwithP(-7);
   inchDriveP(9);
   wait(1500,msec);
-  gyroTurnwithP(90);
-  inchDriveP(5);
-  wait(1500,msec);
-  inchDriveP(-10);
-  gyroTurnwithP(120);
-  inchDriveP(-7);
-  clamp.set(true);
-  inchDriveP(48);
-  gyroTurnwithP(180);
-  inchDriveP(-7);
-  clamp.set(false);
-  
 
+  //score in the corner (robot is facing the wall)
+  gyroTurnwithP(-140);
+ drive(-50, -50, 1000); 
+ driveBrake(); 
+clamp.set(true);
+  wait(500, msec);
+  con.spin(forward, 20, pct);
+  wait(700,msec);
+  con.stop(); 
+   drive(-50, -50, 500); 
+ driveBrake(); 
+
+ //Now go forward to start scoring on the second mogo
+  inchDriveP(10);
+  gyroTurnwithP(135);
+   drive(50, 50, 500); 
+ driveBrake(); 
+  inchDriveP(-40);
+  drive(-50, -50, 1200);
+  driveBrake();
           break; }
 
 // kieran please set the robot and the field correctly >:(
@@ -353,6 +366,8 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
+
+    Display(); 
 
     int lspeed=Controller1.Axis3.position(pct);
     int rspeed=Controller1.Axis2.position(pct);
@@ -384,12 +399,12 @@ motor;
 if (Controller1.ButtonR1.pressing())
 {
   intake.spin(forward, 89, pct);
-  con.spin(forward, 57, pct);
+  con.spin(forward, 50, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
   intake.spin(reverse, 89, pct);
-  con.spin(reverse, 57, pct);
+  con.spin(reverse, 50, pct);
 
 
 }
