@@ -333,12 +333,13 @@ clamp.set(true);
 
  //Now go forward to start scoring on the second mogo
   inchDriveP(10);
-  gyroTurnwithP(135);
+  gyroTurnwithP(132);
    drive(50, 50, 500); 
  driveBrake(); 
   inchDriveP(-40);
-  drive(-50, -50, 1200);
+  drive(-50, -50, 1250);
   driveBrake();
+clamp.set(false);
           break; }
 
 // kieran please set the robot and the field correctly >:(
