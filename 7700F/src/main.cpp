@@ -13,12 +13,21 @@ using namespace vex;
 competition Competition;
 brain Brain;
 controller Controller1;
+<<<<<<< Updated upstream
 motor LF=motor(PORT4,ratio18_1,true);
 motor LB=motor(PORT3,ratio18_1,true);
 motor RF=motor(PORT11,ratio18_1,false);
 motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT5, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
+=======
+motor LF=motor(PORT1,ratio6_1,true);
+motor LB=motor(PORT10,ratio6_1,true);
+motor RF=motor(PORT11,ratio6_1,false);
+motor RB=motor(PORT20,ratio6_1,false);
+motor intake=motor(PORT7, ratio6_1, true);
+motor belt=motor(PORT3, ratio6_1, true);
+>>>>>>> Stashed changes
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial Gyro (PORT15);  
 // A global instance of competition
@@ -379,6 +388,7 @@ else if(Controller1.ButtonL2.pressing())
 }
 
 
+<<<<<<< Updated upstream
 motor;
 
 if (Controller1.ButtonR1.pressing())
@@ -391,11 +401,27 @@ else if(Controller1.ButtonR2.pressing())
   intake.spin(reverse, 89, pct);
   con.spin(reverse, 59, pct);
 
+=======
+
+if (Controller1.ButtonR1.pressing())
+{
+  intake.spin(forward, 80, pct);
+  belt.spin(forward, 80, pct);
+}
+else if(Controller1.ButtonR2.pressing())
+{  
+  intake.spin(reverse, 80, pct);
+  belt.spin(reverse, 80, pct);
+>>>>>>> Stashed changes
 
 }
 else {
 intake.stop(); 
+<<<<<<< Updated upstream
 con.stop();
+=======
+belt.stop();
+>>>>>>> Stashed changes
 }
 
 
