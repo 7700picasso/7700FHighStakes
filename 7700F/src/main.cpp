@@ -13,21 +13,12 @@ using namespace vex;
 competition Competition;
 brain Brain;
 controller Controller1;
-<<<<<<< Updated upstream
 motor LF=motor(PORT4,ratio18_1,true);
 motor LB=motor(PORT3,ratio18_1,true);
 motor RF=motor(PORT11,ratio18_1,false);
 motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT5, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
-=======
-motor LF=motor(PORT1,ratio6_1,true);
-motor LB=motor(PORT10,ratio6_1,true);
-motor RF=motor(PORT11,ratio6_1,false);
-motor RB=motor(PORT20,ratio6_1,false);
-motor intake=motor(PORT7, ratio6_1, true);
-motor belt=motor(PORT3, ratio6_1, true);
->>>>>>> Stashed changes
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial Gyro (PORT15);  
 // A global instance of competition
@@ -113,7 +104,7 @@ void driveBrake(){
 void gyroTurnwithP(float target) {
   Gyro.setRotation(0.0,deg);
   float accuracy = 1.5;
-  float Kp = 0.75;
+  float Kp = 0.65;
   float heading = Gyro.rotation();
   float  error = target - heading; 
   float speed=Kp*error;
@@ -306,35 +297,49 @@ void autonomous(void) {
         
         case 4:
 		     //skills auton       
-  con.spin(reverse, 60, pct);
-  wait(1500,msec);
-  inchDriveP(13);
+  
+  // first ring onto aliance stake 
+  con.spin(reverse, 25, pct);
+  wait(700,msec);
+  con.stop(); 
+
+  //getting first mogo
+  inchDriveP(16);
   wait(1000, msec);
-  gyroTurnwithP(-90);
+  gyroTurnwithP(-87);
   clamp.set(true);
   inchDriveP(-22);
   clamp.set(false);
-  gyroTurnwithP(175);
+  gyroTurnwithP(170);
   intake.spin(reverse, 89, pct);
-  wait(1000,msec);
+   con.spin(reverse, 60, pct);
   inchDriveP(18);
   wait(1000,msec);
-  gyroTurnwithP(-3);
+  gyroTurnwithP(-7);
   inchDriveP(9);
   wait(1500,msec);
-  gyroTurnwithP(90);
-  inchDriveP(5);
-  wait(1500,msec);
-  inchDriveP(-10);
-  gyroTurnwithP(120);
-  inchDriveP(-7);
-  clamp.set(true);
-  inchDriveP(48);
-  gyroTurnwithP(180);
-  inchDriveP(-7);
-  clamp.set(false);
-  
 
+  //score in the corner (robot is facing the wall)
+  gyroTurnwithP(-140);
+ drive(-50, -50, 1000); 
+ driveBrake(); 
+clamp.set(true);
+  wait(500, msec);
+  con.spin(forward, 20, pct);
+  wait(700,msec);
+  con.stop(); 
+   drive(-50, -50, 500); 
+ driveBrake(); 
+
+ //Now go forward to start scoring on the second mogo
+  inchDriveP(10);
+  gyroTurnwithP(132);
+   drive(50, 50, 500); 
+ driveBrake(); 
+  inchDriveP(-40);
+  drive(-50, -50, 1250);
+  driveBrake();
+clamp.set(false);
           break; }
 
 // kieran please set the robot and the field correctly >:(
@@ -363,6 +368,8 @@ void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
 
+    Display(); 
+
     int lspeed=Controller1.Axis3.position(pct);
     int rspeed=Controller1.Axis2.position(pct);
     drive(lspeed, rspeed, 10);
@@ -388,7 +395,6 @@ else if(Controller1.ButtonL2.pressing())
 }
 
 
-<<<<<<< Updated upstream
 motor;
 
 if (Controller1.ButtonR1.pressing())
@@ -401,27 +407,10 @@ else if(Controller1.ButtonR2.pressing())
   intake.spin(reverse, 89, pct);
   con.spin(reverse, 59, pct);
 
-=======
-
-if (Controller1.ButtonR1.pressing())
-{
-  intake.spin(forward, 80, pct);
-  belt.spin(forward, 80, pct);
-}
-else if(Controller1.ButtonR2.pressing())
-{  
-  intake.spin(reverse, 80, pct);
-  belt.spin(reverse, 80, pct);
->>>>>>> Stashed changes
-
 }
 else {
 intake.stop(); 
-<<<<<<< Updated upstream
 con.stop();
-=======
-belt.stop();
->>>>>>> Stashed changes
 }
 
 
