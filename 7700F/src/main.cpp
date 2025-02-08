@@ -32,7 +32,7 @@ float gearRatio = 1.6;
 
 
 //SELECTING AUTON
-int AutonSelected = 1;
+int AutonSelected = 4;
 int AutonMin = 0;
 int AutonMax = 4;
 
@@ -260,7 +260,7 @@ void autonomous(void) {
           clamp.set(true);
           inchDriveP(-26);
           clamp.set(false);
-          con.spin(reverse, 80, pct);
+          con.spin(reverse, 60, pct);
           wait(1500,msec);
           gyroTurnwithP(50);
           intake.spin(reverse, 80, pct);
@@ -276,7 +276,7 @@ void autonomous(void) {
           clamp.set(true);
           inchDriveP(-26);
           clamp.set(false);
-          con.spin(reverse, 65, pct);
+          con.spin(reverse, 60, pct);
           wait(1500,msec);
           gyroTurnwithP(-50);
           intake.spin(reverse, 65, pct);
@@ -384,12 +384,12 @@ motor;
 if (Controller1.ButtonR1.pressing())
 {
   intake.spin(forward, 89, pct);
-  con.spin(forward, 57, pct);
+  con.spin(forward, 59, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
   intake.spin(reverse, 89, pct);
-  con.spin(reverse, 57, pct);
+  con.spin(reverse, 59, pct);
 
 
 }
