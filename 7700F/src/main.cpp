@@ -6,9 +6,6 @@
 /*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
-
-
 #include "vex.h"
 using namespace vex;
 // A global instance of competition
