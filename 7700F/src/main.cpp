@@ -303,7 +303,7 @@ void autonomous(void) {
   con.stop(); 
 
   //getting first mogo
-  inchDriveP(16);
+  inchDriveP(17);
   wait(1000, msec);
   gyroTurnwithP(-87);
   clamp.set(true);
@@ -319,7 +319,7 @@ void autonomous(void) {
   wait(1500,msec);
 
   //score in the corner (robot is facing the wall)
-  gyroTurnwithP(-140);
+  gyroTurnwithP(-135);
  drive(-50, -50, 1000); 
  driveBrake(); 
 clamp.set(true);
@@ -335,10 +335,16 @@ clamp.set(true);
   gyroTurnwithP(132);
    drive(50, 50, 500); 
  driveBrake(); 
-  inchDriveP(-40);
-  drive(-50, -50, 1250);
+  inchDriveP(-50);
+  drive(-50, -50, 1300);
   driveBrake();
 clamp.set(false);
+  gyroTurnwithP(105);
+  inchDriveP(10);
+  intake.spin(reverse, 89, pct);
+    con.spin(reverse, 60, pct);
+    wait(1500, msec);
+    con.stop();
           break; }
 
 // kieran please set the robot and the field correctly >:(
