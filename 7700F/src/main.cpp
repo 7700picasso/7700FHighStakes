@@ -345,6 +345,7 @@ clamp.set(false);
     con.spin(reverse, 60, pct);
     wait(1500, msec);
     con.stop();
+    gyroTurnwithP(20);
           break; }
 
 // kieran please set the robot and the field correctly >:(
