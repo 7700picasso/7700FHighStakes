@@ -303,23 +303,24 @@ void autonomous(void) {
   con.stop(); 
 
   //getting first mogo
-  inchDriveP(17);
+  inchDriveP(20);
   wait(1000, msec);
   gyroTurnwithP(-87);
   clamp.set(true);
-  inchDriveP(-22);
+  inchDriveP(-18);
   clamp.set(false);
-  gyroTurnwithP(170);
+  gyroTurnwithP(163);
   intake.spin(reverse, 89, pct);
    con.spin(reverse, 60, pct);
-  inchDriveP(18);
+  inchDriveP(20);
   wait(1000,msec);
-  gyroTurnwithP(-7);
-  inchDriveP(9);
+  gyroTurnwithP(-9);
+  inchDriveP(10);
   wait(1500,msec);
 
-  //score in the corner (robot is facing the wall)
-  gyroTurnwithP(-135);
+  //Places goal in corner
+  intake.stop();
+  gyroTurnwithP(-139);
  drive(-50, -50, 1000); 
  driveBrake(); 
 clamp.set(true);
@@ -327,26 +328,34 @@ clamp.set(true);
   con.spin(forward, 20, pct);
   wait(700,msec);
   con.stop(); 
-   drive(-50, -50, 500); 
- driveBrake(); 
+ 
 
- //Now go forward to start scoring on the second mogo
-  inchDriveP(10);
+ //Hits wall to straighten
+  inchDriveP(13);
   gyroTurnwithP(132);
-   drive(50, 50, 500); 
+   drive(100, 100, 1500); 
  driveBrake(); 
-  inchDriveP(-50);
-  drive(-50, -50, 1300);
+ wait(1000, msec);
+
+  //reverses to goal, clamps it.
+  inchDriveP(-30);
+  gyroTurnwithP(10);
+  inchDriveP(-20);
+  drive(-50, -50, 1600);
   driveBrake();
 clamp.set(false);
   gyroTurnwithP(105);
   inchDriveP(10);
+
+  //starts to score
   intake.spin(reverse, 89, pct);
     con.spin(reverse, 60, pct);
     wait(1500, msec);
     con.stop();
+    //goes to otherside of the field.
     gyroTurnwithP(195);
   inchDriveP(-15);
+  //grabs mobile goal, places in corners
   clamp.set(true);
     gyroTurnwithP(-20);
     inchDriveP(129);
@@ -355,9 +364,9 @@ clamp.set(false);
   clamp.set(true);
   gyroTurnwithP(180);
   inchDriveP(45);
+  intake.spin(reverse, 90, pct);
+  con.spin(reverse, 60, pct);
           break; }
-
-// kieran please set the robot and the field correctly >:(
 
   
 
