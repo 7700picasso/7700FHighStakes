@@ -303,7 +303,7 @@ void autonomous(void) {
   con.stop(); 
 
   //getting first mogo
-  inchDriveP(20);
+  inchDriveP(16);
   wait(1000, msec);
   gyroTurnwithP(-87);
   clamp.set(true);
@@ -339,7 +339,7 @@ clamp.set(true);
 
   //reverses to goal, clamps it.
   inchDriveP(-30);
-  gyroTurnwithP(10);
+  gyroTurnwithP(-10);
   inchDriveP(-20);
   drive(-50, -50, 1600);
   driveBrake();
