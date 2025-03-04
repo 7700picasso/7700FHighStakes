@@ -179,6 +179,12 @@ double rightFrontCurr = RF.current(amp);
 double rightFrontTemp = RF.temperature(celsius);
 double rightBackCurr = RB.current(amp);
 double rightBackTemp = RB.temperature(celsius);
+double intakeFrontCurr = intake.current(amp);
+double intakeFrontTemp = intake.temperature(celsius);
+double conFrontCurr = con.current(amp);
+double conFrontTemp = con.temperature(celsius);
+
+
 
 if (LF.installed())
 {
@@ -211,6 +217,23 @@ Brain.Screen.printAt(300, YOFFSET + 91, "RB");
 }
 else
 Brain.Screen.printAt(5, YOFFSET + 91, "RB Problem");
+
+if (intake.installed())
+{
+MotorDisplay(121, intakeFrontCurr, intakeFrontTemp);
+Brain.Screen.printAt(300, YOFFSET + 121, "intake");
+}
+else
+Brain.Screen.printAt(5, YOFFSET + 121, "Intake Problem");
+
+
+if (con.installed())
+{
+MotorDisplay(151, conFrontCurr, conFrontTemp);
+Brain.Screen.printAt(300, YOFFSET + 151, "Con");
+}
+else
+Brain.Screen.printAt(5, YOFFSET + 151, "Con Problem");
 
 }
 
@@ -312,7 +335,7 @@ void autonomous(void) {
   gyroTurnwithP(163);
   intake.spin(reverse, 89, pct);
    con.spin(reverse, 60, pct);
-  inchDriveP(20);
+  inchDriveP(22);
   wait(1000,msec);
   gyroTurnwithP(-9);
   inchDriveP(10);
