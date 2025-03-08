@@ -18,6 +18,7 @@ motor RF=motor(PORT11,ratio18_1,false);
 motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT5, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
+motor arm=motor(PORT7, ratio18_1, true);
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial Gyro (PORT15);  
 // A global instance of competition
@@ -26,12 +27,8 @@ float dia = 3.25;
 float gearRatio = 1.6;
 
 
-
-
-
-
 //SELECTING AUTON
-int AutonSelected = 4;
+int AutonSelected = 0;
 int AutonMin = 0;
 int AutonMax = 4;
 
@@ -288,9 +285,9 @@ void autonomous(void) {
           intake.spin(reverse, 80, pct);
           inchDriveP(20);
           wait(1000, msec);
-          clamp.set(true);
-          gyroTurnwithP(165);
-          inchDriveP(45);
+          //clamp.set(true);
+          //gyroTurnwithP(165);
+          //        inchDriveP(45);
 					break;
 				
 				case 1:
@@ -436,16 +433,6 @@ else if(Controller1.ButtonB.pressing())
 {
   clamp.set(false);
 }
-if(Controller1.ButtonL1.pressing())
-{
- 
-  clamp.set(true);
-}
-else if(Controller1.ButtonL2.pressing())
-{
-  clamp.set(false);
-}
-
 
 motor;
 
@@ -458,11 +445,19 @@ else if(Controller1.ButtonR2.pressing())
 {  
   intake.spin(reverse, 89, pct);
   con.spin(reverse, 59, pct);
-
+}
+if (Controller1.ButtonL1.pressing())
+{
+  arm.spin(forward, 60, pct);
+}
+else if(Controller1.ButtonL2.pressing())
+{
+  arm.spin(reverse, 60, pct);
 }
 else {
 intake.stop(); 
 con.stop();
+
 }
 
 
