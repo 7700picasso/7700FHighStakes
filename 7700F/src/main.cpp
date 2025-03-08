@@ -330,9 +330,9 @@ void autonomous(void) {
   wait(1000, msec);
   gyroTurnwithP(-87);
   clamp.set(true);
-  inchDriveP(-18);
+  inchDriveP(-22);
   clamp.set(false);
-  gyroTurnwithP(163);
+  gyroTurnwithP(165);
   intake.spin(reverse, 89, pct);
    con.spin(reverse, 60, pct);
   inchDriveP(22);
@@ -381,14 +381,19 @@ clamp.set(false);
   //grabs mobile goal, places in corners
   clamp.set(true);
     gyroTurnwithP(-20);
+  //goes across the field
     inchDriveP(129);
     gyroTurnwithP(45);
+  //grabs the mobile goal 
   inchDriveP(-35);
-  clamp.set(true);
+  clamp.set(false);
+  //turns around to start getting rings
   gyroTurnwithP(180);
   inchDriveP(45);
   intake.spin(reverse, 90, pct);
   con.spin(reverse, 60, pct);
+  gyroTurnwithP(-145);
+  inchDriveP(-30);
           break; }
 
   
