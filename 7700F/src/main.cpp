@@ -25,12 +25,17 @@ inertial Gyro (PORT15);
 float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
-
+float armPositions[] = {0.0, 90, 360};
+int currentPositionindex = 0;
+float target = 0;
 
 //SELECTING AUTON
-int AutonSelected = 0;
+int AutonSelected = 1;
 int AutonMin = 0;
 int AutonMax = 4;
+
+//Red Nagtive and Blue Positive is: #0
+//Red Positive and Blue Negative is: #1
 
 //competition Competition;
 
@@ -96,7 +101,46 @@ void driveBrake(){
   RB.stop(brake);
 
 }
+void armbrake(){
+  arm.stop(brake);
+}
 
+
+
+  void changeTarget(){
+    currentPositionindex++;
+    if(currentPositionindex > 3){
+      currentPositionindex = 0;
+    }
+    target = armPositions[currentPositionindex];
+  }
+void armRotationcontrol(){
+  float position = 0.0;
+  float accuracy = 2.0;
+  float error = target - position;
+float kp=0.3;
+  float previousError = 0.0; //Store the previous error for derivative control
+  float kd = 0.5; // Derivative Gain
+  float speed=0;
+
+//rotationSensor.resetPosition(); // strange
+
+while (true) {
+  target = armPositions[currentPositionindex]; //Keep updating target
+  position = arm.position(deg);
+  error = target - position;
+
+//Speed term
+float speed = kp * error;
+
+  if (fabs(error) < accuracy){
+    arm.stop(hold); 
+  }
+else { 
+  arm.spin(fwd, speed, percent); 
+}
+}
+}
 void gyroTurnwithP(float target) {
   Gyro.setRotation(0.0,deg);
   float accuracy = 1.5;
@@ -439,27 +483,36 @@ motor;
 if (Controller1.ButtonR1.pressing())
 {
   intake.spin(forward, 89, pct);
-  con.spin(forward, 59, pct);
+  con.spin(forward, 70, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
   intake.spin(reverse, 89, pct);
-  con.spin(reverse, 59, pct);
+  con.spin(reverse, 70, pct);
 }
-if (Controller1.ButtonL1.pressing())
-{
-  arm.spin(forward, 60, pct);
-}
-else if(Controller1.ButtonL2.pressing())
-{
-  arm.spin(reverse, 60, pct);
-}
+//if (Controller1.ButtonL1.pressing())
+//{
+//  if (Controller1.ButtonR1.pressing())
+//}
+//else if(Controller1.ButtonL2.pressing())
+//{
+ // arm.spin(reverse, 60, pct);
+//}
 else {
 intake.stop(); 
 con.stop();
-
+//arm.stop();
 }
 
+if (Controller1.ButtonL1.pressing()){
+arm.spin(forward, 89, pct);
+}
+else if(Controller1.ButtonL2.pressing()){
+arm.spin(reverse, 89, pct);
+}
+else{
+arm.stop();
+}
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources. 
