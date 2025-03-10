@@ -25,7 +25,7 @@ inertial Gyro (PORT15);
 float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
-float armPositions[] = {0.0, 90, 360};
+float armPositions[] = {0.0, 60, 460};
 int currentPositionindex = 0;
 float target = 0;
 
@@ -459,6 +459,11 @@ clamp.set(false);
 
 void usercontrol(void) {
   // User control code here, inside the loop
+
+
+  Controller1.ButtonL2.pressed(changeTarget);
+  thread  ArmThread (armRotationcontrol); 
+
   while (1) {
 
     Display(); 
@@ -504,15 +509,15 @@ con.stop();
 //arm.stop();
 }
 
-if (Controller1.ButtonL1.pressing()){
-arm.spin(forward, 89, pct);
-}
-else if(Controller1.ButtonL2.pressing()){
-arm.spin(reverse, 89, pct);
-}
-else{
-arm.stop();
-}
+// if (Controller1.ButtonL1.pressing()){
+// arm.spin(reverse, 89, pct);
+// }
+// else if(Controller1.ButtonL2.pressing()){
+// arm.spin(forward, 89, pct);
+// }
+// else{
+// arm.stop();
+// }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources. 
