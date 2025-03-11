@@ -25,7 +25,7 @@ inertial Gyro (PORT15);
 float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
-float armPositions[] = {0.0, 60, 460};
+float armPositions[] = {0.0, 75, 500};
 int currentPositionindex = 0;
 float target = 0;
 
