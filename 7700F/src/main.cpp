@@ -30,7 +30,7 @@ int currentPositionindex = 0;
 float target = 0;
 
 //SELECTING AUTON
-int AutonSelected = 1;
+int AutonSelected = 0;
 int AutonMin = 0;
 int AutonMax = 4;
 
@@ -323,15 +323,17 @@ void autonomous(void) {
           clamp.set(true);
           inchDriveP(-26);
           clamp.set(false);
-          con.spin(reverse, 60, pct);
-          wait(1500,msec);
-          gyroTurnwithP(50);
+          con.spin(reverse, 68, pct);
+          wait(1200,msec);
+          gyroTurnwithP(60);
           intake.spin(reverse, 80, pct);
           inchDriveP(20);
+          gyroTurnwithP(-82);
+          inchDriveP(22);
           wait(1000, msec);
           //clamp.set(true);
-          //gyroTurnwithP(165);
-          //        inchDriveP(45);
+          gyroTurnwithP(-110);
+           inchDriveP(37);
 					break;
 				
 				case 1:
@@ -345,7 +347,6 @@ void autonomous(void) {
           intake.spin(reverse, 65, pct);
           inchDriveP(20);
           wait(1000,msec);
-          clamp.set(true);
           gyroTurnwithP(-165);
           inchDriveP(45);
 					break;
