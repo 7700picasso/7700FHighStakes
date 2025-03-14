@@ -19,13 +19,14 @@ motor RB=motor(PORT20,ratio18_1,false);
 motor intake=motor(PORT5, ratio6_1, false);
 motor con=motor(PORT1, ratio18_1, true);
 motor arm=motor(PORT7, ratio18_1, true);
+motor arm2=motor(PORT10,ratio18_1,false);
 digital_out clamp (Brain.ThreeWirePort.A); 
 inertial Gyro (PORT15);  
 // A global instance of competition
 float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
-float armPositions[] = {0.0, 60, 545};
+float armPositions[] = {0.0, 67, 530};
 int currentPositionindex = 0;
 float target = 0;
 
@@ -118,7 +119,7 @@ void armRotationcontrol(){
   float position = 0.0;
   float accuracy = 2.0;
   float error = target - position;
-float kp=0.3;
+  float kp=0.3;
   float previousError = 0.0; //Store the previous error for derivative control
   float kd = 0.5; // Derivative Gain
   float speed=0;
@@ -135,9 +136,11 @@ float speed = kp * error;
 
   if (fabs(error) < accuracy){
     arm.stop(hold); 
+    arm2.stop(hold); 
   }
 else { 
   arm.spin(fwd, speed, percent); 
+  arm2.spin(fwd, speed, percent); 
 }
 }
 }
@@ -489,12 +492,12 @@ motor;
 if (Controller1.ButtonR1.pressing())
 {
   intake.spin(forward, 89, pct);
-  con.spin(forward, 70, pct);
+  con.spin(forward, 75, pct);
 }
 else if(Controller1.ButtonR2.pressing())
 {  
   intake.spin(reverse, 89, pct);
-  con.spin(reverse, 70, pct);
+  con.spin(reverse, 75, pct);
 }
 //if (Controller1.ButtonL1.pressing())
 //{
