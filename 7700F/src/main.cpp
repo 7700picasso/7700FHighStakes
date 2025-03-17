@@ -26,16 +26,16 @@ inertial Gyro (PORT15);
 float pi = 3.14;
 float dia = 3.25;
 float gearRatio = 1.6;
-float armPositions[] = {0.0, 67, 530};
+float armPositions[] = {0.0, 55, 530};
 int currentPositionindex = 0;
 float target = 0;
 
-//SELECTING AUTON
-int AutonSelected = 0;
+//SELECTING AUTON.
+int AutonSelected = 1;
 int AutonMin = 0;
 int AutonMax = 4;
 
-//Red Nagtive and Blue Positive is: #0
+//Red Negative and Blue Positive is: #0
 //Red Positive and Blue Negative is: #1
 
 //competition Competition;
@@ -44,7 +44,7 @@ void selectAuton() {
 		bool selectingAuton = true;
 		
 		int x = Brain.Screen.xPosition(); // get the x position of last touch of the screen
-		int y = Brain.Screen.yPosition(); // get the y position of last touch of the screen
+		int y = Brain.Screen.yPosition(); // get the y positiüon of last touch of the screen
 		
 		// check to see if buttons were pressed
 		if (x >= 20 && x <= 120 && y >= 50 && y <= 150){ // select button pressed
@@ -331,12 +331,12 @@ void autonomous(void) {
           gyroTurnwithP(60);
           intake.spin(reverse, 80, pct);
           inchDriveP(20);
-          gyroTurnwithP(-82);
-          inchDriveP(22);
-          wait(1000, msec);
+          //gyroTurnwithP(-82);
+          //inchDriveP(22);
+          //wait(1000, msec);
           //clamp.set(true);
-          gyroTurnwithP(-110);
-           inchDriveP(37);
+          gyroTurnwithP(-165);
+           inchDriveP(45);
 					break;
 				
 				case 1:
